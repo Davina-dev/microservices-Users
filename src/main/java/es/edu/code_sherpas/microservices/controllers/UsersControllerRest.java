@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UsersControllerRest {
 
 
-    @GetMapping ("/users/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
+    @GetMapping ("/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
     public UserDTO getUserById(@PathVariable Integer id){ //desde el cliente me trae el id y se empareja con mi id
         System.out.println("Recovery user by id");
 
@@ -20,7 +21,8 @@ public class UsersControllerRest {
 
         return userDTO; //nos convierte nuestro objeto java en un json resultante
     }
-    @GetMapping("/users") //a diferencia del anterior, este no recibe argumento id
+
+    @GetMapping //a diferencia del anterior, este no recibe argumento id
     public List<UserDTO> listAllUsers() {
         List<UserDTO> list = List.of(new UserDTO(1, "Davina"),
                                      new UserDTO(2, "Eida"),
@@ -29,24 +31,26 @@ public class UsersControllerRest {
         return list;
     }
 
+    //getMapping de los usuatios pero con algunos filtros añadidos
+
     // creacion del usuario, ahora ya si que altero el modelo. Usamos el Post xq creo un recurso nuevo
-    @PostMapping ("/users") //por buena practica se empareja con los get
+    @PostMapping  //por buena practica se empareja con los get
     public String createUser(@RequestBody UserDTO userDTO){ //la info la atrapo en forma de UserDTO por parametro. Transforma el json en userDTO
         System.out.println("Creating user" + userDTO.getName());
 
         return  "http://localhost:8080/" + userDTO.getId();
     }
     //enpoint actualizar usuario
-    @PutMapping ("/users")//edita, altera un recurso
+    @PutMapping //edita, altera un recurso
     // PATH es para modificar parcialmente un recurso. solo modifica un atributo del user y no tod el user entero
-    public  UserDTO updateuser(@RequestBody UserDTO userDTO){
+    public  UserDTO updateUser(@RequestBody UserDTO userDTO){
         System.out.println("Updating data");
         //buscar user by id
         //update
         return userDTO;
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public void  deleteUser(@PathVariable Integer id){
         System.out.println("Delete user by id");
     }
