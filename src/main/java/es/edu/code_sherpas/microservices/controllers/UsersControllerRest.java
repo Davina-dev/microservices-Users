@@ -2,8 +2,6 @@ package es.edu.code_sherpas.microservices.controllers;
 
 import es.edu.code_sherpas.microservices.modelo.AccountDTO;
 import es.edu.code_sherpas.microservices.modelo.UserDTO;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -11,9 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-//navegacion de un recurso consigo mismo: los dos imports siguientes
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/users") //unifica rutas para no repetir
 public class UsersControllerRest {
@@ -28,40 +24,21 @@ public class UsersControllerRest {
         userDTO.setEmail("davina@davina.com");
         userDTO.setBirthdate("13/04/1991");
 
-        //incorporamos navegacion a la respuesta y en postman se podra ver un array de links -> viene a decir que ese objeto se puede recuperar en esa uri
-        Link withSelfRel = linkTo(methodOn(UsersControllerRest.class).getUserById(userDTO.getId())).withSelfRel();
-        userDTO.add(withSelfRel);
-
         return ResponseEntity.ok(userDTO); //nos convierte nuestro objeto java en un json resultante en un codigo httl ok
     }
 
     @GetMapping //a diferencia del anterior, este no recibe argumento id
-    public ResponseEntity<CollectionModel<UserDTO>> listAllUsers(@RequestParam(required = false) String name,
+    public ResponseEntity<List <UserDTO>> listAllUsers(@RequestParam(required = false) String name,
                                                        @RequestParam(required = false) String surname,
-                                                       @RequestParam(required = false) String birthdate) {
+                                                       @RequestParam(required = false) String birthdate)
+    {
 
         List<UserDTO> list = List.of(new UserDTO(1, "Davina"),
                                      new UserDTO(2, "Eida"),
                                      new UserDTO(3, "Antonio"));
 
-        //hateos para que cada user tenga su link. y poder recuperar un usuario en concreto por su link
-        for (UserDTO userDTO : list) {
-            // relacion self
-            Link withSelfRel = linkTo(methodOn(UsersControllerRest.class).getUserById(userDTO.getId())).withSelfRel();
-            userDTO.add(withSelfRel);
-            //relación  accounts: nos muestra todos los links de las cuentas del usuario
-            Link accountsRel = linkTo(methodOn(UsersControllerRest.class).getUserAccounts(userDTO.getId()))
-                    .withRel("accounts");
-            userDTO.add(accountsRel);
-        }
-
-
-
-        //hateos-> para que retorne la lista de links
-        Link link = linkTo(methodOn(UsersControllerRest.class).listAllUsers("", "", "")).withSelfRel();
-        CollectionModel<UserDTO> result = CollectionModel.of(list, link);
-
-        return ResponseEntity.ok(result);
+        list = list.stream().filter(u -> u.getName().contains(name)).collect(Collectors.toList());
+        return ResponseEntity.ok(list);
     }
 
     //getMapping de los usuatios pero con algunos filtros añadidos
@@ -102,7 +79,7 @@ public class UsersControllerRest {
 
 //anidacion de recursos
     @GetMapping("/{id}/accounts")
-	public ResponseEntity <List<AccountDTO>> getUserAccounts(@PathVariable Integer id) {
+	public ResponseEntity <List<AccountDTO>> getUserAccount(@PathVariable Integer id) {
 
         List<AccountDTO> list = List.of(new AccountDTO("google"), new AccountDTO("twitter"), new AccountDTO("GitHub"));
 
