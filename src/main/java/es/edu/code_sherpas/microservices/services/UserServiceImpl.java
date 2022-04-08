@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements  UserService{
 public UserDTO getUserById(Integer id) {
 
-		return  new UserDTO(1, "Davina desde capa de negocio");
-		
+		return  new UserDTO(1, "Davina desde capa de negociO");
+
 	}
-	
+
 
 }
