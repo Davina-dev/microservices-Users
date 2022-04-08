@@ -1,5 +1,6 @@
     package es.edu.code_sherpas.microservices.controllers;
 
+
     import es.edu.code_sherpas.microservices.modelo.AccountDTO;
     import es.edu.code_sherpas.microservices.modelo.UserDTO;
     import es.edu.code_sherpas.microservices.services.UserService;
@@ -22,18 +23,21 @@
     @RequestMapping("/users") //unifica rutas para no repetir
 
 
-    public class UsersControllerRest {
 
+    public class UsersControllerRest {
 
         //la capa controller tiene un obj q es la capa de servicio y es la q llama para delegar las facultades a la logica de negocio
         @Autowired
         private UserService userService;
 
         @GetMapping ("/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
+
         public ResponseEntity <UserDTO> getUserById(@PathVariable Integer id){ //desde el cliente me trae el id y se empareja con mi id
+
             System.out.println("Recovery user by id");
 
             UserDTO userDTO= userService.getUserById(id);
+
 
             //incorporamos navegacion a la respuesta y en postman se podra ver un array de links -> viene a decir que ese objeto se puede recuperar en esa uri
             Link withSelfRel = linkTo(methodOn(UsersControllerRest.class).getUserById(userDTO.getId())).withSelfRel();
@@ -41,6 +45,7 @@
 
             return ResponseEntity.ok(userDTO); //nos convierte nuestro objeto java en un json resultante en un codigo httl ok
         }
+
 
         @GetMapping //a diferencia del anterior, este no recibe argumento id
         public ResponseEntity<CollectionModel<UserDTO>> listAllUsers(@RequestParam(required = false) String name,
@@ -123,3 +128,6 @@
         }
 
     }
+
+
+
