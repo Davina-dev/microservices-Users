@@ -1,18 +1,14 @@
 package es.edu.code_sherpas.microservices.modelo;
 import lombok.*;
-
-import org.jetbrains.annotations.NotNull;
+;
 import org.springframework.hateoas.RepresentationModel; // para que sea navegable: extends RepresentationModel
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
 @Data
-//@EqualsAndHashCode (callSuper = true) //estamos llamando a los path
+@EqualsAndHashCode (callSuper = true) //estamos llamando a los path
 @NoArgsConstructor
 @RequiredArgsConstructor
 

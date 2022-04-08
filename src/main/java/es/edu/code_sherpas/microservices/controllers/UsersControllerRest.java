@@ -15,6 +15,8 @@
     import javax.validation.Valid;
     import java.net.URI;
     import java.util.List;
+    import java.util.NoSuchElementException;
+    import java.util.Optional;
     //navegacion de un recurso consigo mismo: los dos imports siguientes
     import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
     import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -22,28 +24,32 @@
     @RestController
     @RequestMapping("/users") //unifica rutas para no repetir
 
-
-
     public class UsersControllerRest {
 
         //la capa controller tiene un obj q es la capa de servicio y es la q llama para delegar las facultades a la logica de negocio
         @Autowired
         private UserService userService;
 
-        @GetMapping ("/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
-
-        public ResponseEntity <UserDTO> getUserById(@PathVariable Integer id){ //desde el cliente me trae el id y se empareja con mi id
+        @GetMapping("/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
+        public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id){ //desde el cliente me trae el id y se empareja con mi id
 
             System.out.println("Recovery user by id");
 
-            UserDTO userDTO= userService.getUserById(id);
+           Optional<UserDTO> optUserDTO = userService.getUserById(id);
 
+            try {
 
-            //incorporamos navegacion a la respuesta y en postman se podra ver un array de links -> viene a decir que ese objeto se puede recuperar en esa uri
-            Link withSelfRel = linkTo(methodOn(UsersControllerRest.class).getUserById(userDTO.getId())).withSelfRel();
-            userDTO.add(withSelfRel);
+                UserDTO userDTO = optUserDTO.orElseThrow(NoSuchElementException::new);
 
-            return ResponseEntity.ok(userDTO); //nos convierte nuestro objeto java en un json resultante en un codigo httl ok
+                Link withSelfRel = linkTo(methodOn(UsersControllerRest.class).getUserById(userDTO.getId())).withSelfRel();
+                userDTO.add(withSelfRel);
+
+                return ResponseEntity.ok(userDTO);
+
+            } catch (NoSuchElementException e) {
+
+                return ResponseEntity.notFound().build();
+            }
         }
 
 
@@ -52,9 +58,7 @@
                                                            @RequestParam(required = false) String surname,
                                                            @RequestParam(required = false) String birthdate) {
 
-            List<UserDTO> list = List.of(new UserDTO(1, "Davina"),
-                                         new UserDTO(2, "Eida"),
-                                         new UserDTO(3, "Antonio"));
+            List<UserDTO> list = userService.listAllUsers();
 
             //hateos para que cada user tenga su link. y poder recuperar un usuario en concreto por su link
             for (UserDTO userDTO : list) {
@@ -83,6 +87,8 @@
         public ResponseEntity <String> createUser( @Valid @RequestBody UserDTO userDTO){ //la info la atrapo en forma de UserDTO por parametro. Transforma el json en userDTO
             System.out.println("Creating user " + userDTO.getName());
 
+           userDTO = userService.saveUser(userDTO);
+
             // recupera el uri location y estamos indicando con el id path q va a ser el parametro q va a corresponder con el id del objeto
             URI location = ServletUriComponentsBuilder.
                     fromCurrentRequest().path("/{id}")
@@ -108,6 +114,8 @@
         @DeleteMapping("/{id}")
         public ResponseEntity<Void> deleteUser(@PathVariable Integer id){ //responseentity no devuelve nada asi q usamos el obj void
             System.out.println("Delete user by id");
+
+            userService.deleteById(id);
 
             return ResponseEntity.ok(null);
         }

@@ -9,8 +9,12 @@ import java.util.Optional;
 
 
 public interface UserService{
-    public UserDTO getUserById(Integer id);
+    public Optional<UserDTO> getUserById(Integer id);
 
+    public  List<UserDTO> listAllUsers();
 
+    public UserDTO saveUser(UserDTO userDTO);
+
+    public  void  deleteById(Integer id);
 
 }
