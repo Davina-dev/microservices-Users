@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @EqualsAndHashCode (callSuper = true) //estamos llamando a los path
 @NoArgsConstructor
 @RequiredArgsConstructor
-
 public class UserDTO extends RepresentationModel<UserDTO> {
 
     @NonNull
@@ -20,7 +19,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
     @NonNull
     @NotBlank  //validator (al menos  1 caracter)
     private String name;
-    @Size(min =5, max=20) //validator
+    @Size(min =5, max=64) //validator
     private String surname;
     @Email //validator
     private String email;

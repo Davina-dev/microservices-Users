@@ -1,4 +1,4 @@
-package es.edu.code_sherpas.microservices.entities;
+package es.edu.code_sherpas.microservices.dao.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

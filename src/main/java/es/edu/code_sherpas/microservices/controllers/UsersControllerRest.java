@@ -6,6 +6,7 @@
     import es.edu.code_sherpas.microservices.services.UserService;
     import es.edu.code_sherpas.microservices.services.UserServiceImpl;
     import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.data.domain.Pageable;
     import org.springframework.hateoas.CollectionModel;
     import org.springframework.hateoas.Link;
     import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@
 
     import javax.validation.Valid;
     import java.net.URI;
+
     import java.util.List;
     import java.util.NoSuchElementException;
     import java.util.Optional;
@@ -28,7 +30,7 @@
     public class UsersControllerRest {
 
         //la capa controller tiene un obj q es la capa de servicio y es la q llama para delegar las facultades a la logica de negocio
-        @Autowired
+       @Autowired
         private UserService userService;
 
         @GetMapping("/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
@@ -52,8 +54,8 @@
         @GetMapping //a diferencia del anterior, este no recibe argumento id
         public ResponseEntity<CollectionModel<UserDTO>> listAllUsers(@RequestParam(required = false) String name,
                                                                      @RequestParam(required = false) String surname,
-                                                                     @RequestParam(required = false) String birthdate) {
-            List<UserDTO> list = userService.listAllUsers();
+                                                                     Pageable pageable) {
+            List<UserDTO> list = userService.listAllUsers(pageable);
 
             //hateos para que cada user tenga su link. y poder recuperar un usuario en concreto por su link
             for (UserDTO userDTO : list) {
@@ -69,7 +71,7 @@
 
 
             //hateos-> para que retorne la lista de links
-            Link link = linkTo(methodOn(UsersControllerRest.class).listAllUsers("", "", "")).withSelfRel();
+            Link link = linkTo(methodOn(UsersControllerRest.class).listAllUsers("", "", pageable)).withSelfRel();
             CollectionModel<UserDTO> result = CollectionModel.of(list, link);
             return ResponseEntity.ok(result);
         }

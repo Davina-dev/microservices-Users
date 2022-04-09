@@ -1,4 +1,4 @@
-package es.edu.code_sherpas.microservices.entities;
+package es.edu.code_sherpas.microservices.dao.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,10 +6,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
+//capa de obj de entidades para persistir en bbdd
 
-
-@Data
+    @Data
     @RequiredArgsConstructor
     @NoArgsConstructor
     @Entity(name = "users")
