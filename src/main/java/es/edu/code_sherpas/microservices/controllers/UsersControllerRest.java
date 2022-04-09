@@ -8,6 +8,7 @@
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.hateoas.CollectionModel;
     import org.springframework.hateoas.Link;
+    import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
     import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -33,21 +34,16 @@
         @GetMapping("/{id}") //enpoint dnd solo retorna info sin alterar el modelo del esquema q yo tengo de datos
         public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id){ //desde el cliente me trae el id y se empareja con mi id
 
-            System.out.println("Recovery user by id");
+           System.out.println("Recovery user by id");
 
            Optional<UserDTO> optUserDTO = userService.getUserById(id);
 
             try {
-
                 UserDTO userDTO = optUserDTO.orElseThrow(NoSuchElementException::new);
-
                 Link withSelfRel = linkTo(methodOn(UsersControllerRest.class).getUserById(userDTO.getId())).withSelfRel();
                 userDTO.add(withSelfRel);
-
                 return ResponseEntity.ok(userDTO);
-
             } catch (NoSuchElementException e) {
-
                 return ResponseEntity.notFound().build();
             }
         }
@@ -55,9 +51,8 @@
 
         @GetMapping //a diferencia del anterior, este no recibe argumento id
         public ResponseEntity<CollectionModel<UserDTO>> listAllUsers(@RequestParam(required = false) String name,
-                                                           @RequestParam(required = false) String surname,
-                                                           @RequestParam(required = false) String birthdate) {
-
+                                                                     @RequestParam(required = false) String surname,
+                                                                     @RequestParam(required = false) String birthdate) {
             List<UserDTO> list = userService.listAllUsers();
 
             //hateos para que cada user tenga su link. y poder recuperar un usuario en concreto por su link
@@ -76,7 +71,6 @@
             //hateos-> para que retorne la lista de links
             Link link = linkTo(methodOn(UsersControllerRest.class).listAllUsers("", "", "")).withSelfRel();
             CollectionModel<UserDTO> result = CollectionModel.of(list, link);
-
             return ResponseEntity.ok(result);
         }
 
@@ -88,35 +82,33 @@
             System.out.println("Creating user " + userDTO.getName());
 
            userDTO = userService.saveUser(userDTO);
-
             // recupera el uri location y estamos indicando con el id path q va a ser el parametro q va a corresponder con el id del objeto
             URI location = ServletUriComponentsBuilder.
                     fromCurrentRequest().path("/{id}")
                     .buildAndExpand(userDTO.getId())
                     .toUri();
-
             return ResponseEntity.created(location).build(); //postman: devuelve 201 y en header el location
-
         }
-
 
         //enpoint actualizar usuario
 
         @PutMapping //edita, altera un recurso
         // PATH es para modificar parcialmente un recurso. solo modifica un atributo del user y no tod el user entero
-        public ResponseEntity<UserDTO > updateUser(@RequestBody UserDTO userDTO){
+        public ResponseEntity<UserDTO > updateUser(@RequestBody UserDTO userDTO, @PathVariable Integer id){
             System.out.println("Updating data");
-            //buscar user by id
-            //update
-            return ResponseEntity.ok(userDTO);
+            try{
+               Optional <UserDTO> existingUser =userService.getUserById(id);
+               userService.saveUser(userDTO);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }catch (NoSuchElementException e){
+                return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+            }
         }
 
         @DeleteMapping("/{id}")
         public ResponseEntity<Void> deleteUser(@PathVariable Integer id){ //responseentity no devuelve nada asi q usamos el obj void
             System.out.println("Delete user by id");
-
             userService.deleteById(id);
-
             return ResponseEntity.ok(null);
         }
 

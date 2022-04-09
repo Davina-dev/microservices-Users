@@ -1,7 +1,7 @@
+//trae desde la bbdd
 package es.edu.code_sherpas.microservices.services;
 
-//trae desde la bbdd
-import es.edu.code_sherpas.microservices.dao.repositories.UserRepository;
+import es.edu.code_sherpas.microservices.repositories.UserRepository;
 import es.edu.code_sherpas.microservices.modelo.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,25 +11,22 @@ import java.util.Optional;
 
 @Service
 	public class UserServiceImpl implements  UserService{
-	//hace una instancia de la interfaz repository
+
 		@Autowired
-		private  UserRepository userRepository;                 //llamamos a capa inferior de repository
+		private  UserRepository userRepository;
 
 		public Optional<UserDTO> getUserById(Integer id) {
-			Optional<UserDTO> userDTO = userRepository.findById(id);
-			return userDTO;
+			return userRepository.findById(id);
 		}
 
 		@Override
 		public List<UserDTO> listAllUsers() {
-			List<UserDTO> users= userRepository.findAll();
-			return users;
+			return userRepository.findAll();
 		}
 
 		@Override
 		public UserDTO saveUser(UserDTO userDTO) {
-			userDTO = userRepository.save(userDTO);
-			return userDTO;
+			return userRepository.save(userDTO);
 		}
 
 		@Override

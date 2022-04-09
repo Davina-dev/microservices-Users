@@ -1,11 +1,9 @@
-package es.edu.code_sherpas.microservices;
+package es.edu.code_sherpas.microservices.repositories;
 
 import es.edu.code_sherpas.microservices.modelo.UserDTO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 @Repository
@@ -15,6 +13,7 @@ public interface UserRepository extends JpaRepository<UserDTO, Integer> {
 	guardar y levantar  usuarios de la bbdd
 	Lo usaremso desde service
 	*/
+
 
 }
 
