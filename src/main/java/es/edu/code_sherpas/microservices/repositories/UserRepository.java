@@ -1,4 +1,4 @@
-package es.edu.code_sherpas.microservices.dao.repositories;
+package es.edu.code_sherpas.microservices;
 
 import es.edu.code_sherpas.microservices.modelo.UserDTO;
 
