@@ -1,0 +1,13 @@
+package es.edu.code_sherpas.microservices.repository;
+
+
+
+import es.edu.code_sherpas.microservices.modelo.UserDTO;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+
+    @Repository
+    public interface UserRepository extends JpaRepository<UserDTO, Integer> {
+    }
