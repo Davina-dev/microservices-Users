@@ -12,10 +12,8 @@
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
     import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
     import javax.validation.Valid;
     import java.net.URI;
-
     import java.util.List;
     import java.util.NoSuchElementException;
     import java.util.Optional;
@@ -26,7 +24,6 @@
 
     @RestController
     @RequestMapping("/users") //unifica rutas para no repetir
-
     public class UsersControllerRest {
 
        @Autowired
@@ -81,7 +78,7 @@
 
 
         @PostMapping
-        public ResponseEntity <String> createUser( @Valid @RequestBody UserDTO userDTO){
+        public ResponseEntity<String> createUser( @Valid @RequestBody UserDTO userDTO){
 
             System.out.println("Creating user " + userDTO.getName());
 
@@ -103,11 +100,15 @@
             try{
                Optional <UserDTO> existingUser =userService.getUserById(id);
                userService.saveUser(userDTO);
+
                 return new ResponseEntity<>(HttpStatus.OK);
+
             }catch (NoSuchElementException e){
+
                 return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
             }
         }
+
 
         @DeleteMapping("/{id}")
         public ResponseEntity<UserDTO> delete(@PathVariable Integer id){ //responseentity no devuelve nada asi q usamos el obj void
