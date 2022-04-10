@@ -51,14 +51,7 @@ class UserServiceImplTest {
         Assertions.assertEquals(sut, product);
     }
 
-    @Test
-    void UserServiceCanDeleteAUser() {
-        UserDTO userDTO = new UserDTO();
-        Mockito.when(this.userRepository.findById(1)).thenReturn(Optional.of(userDTO));
-        UserServiceImpl productService = new UserServiceImpl(this.userRepository);
-        boolean sut = productService.deleteById(1);
-        Assertions.assertTrue(sut);
-    }
+
 
     @Test
     void ProductServiceCantDeleteWhenProductDoesNotExist() {

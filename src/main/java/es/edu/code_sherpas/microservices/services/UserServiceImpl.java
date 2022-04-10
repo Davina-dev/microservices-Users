@@ -16,6 +16,9 @@ public class UserServiceImpl implements  UserService{
 	@Autowired
 	private UserRepository userRepository;
 
+	public UserServiceImpl(UserRepository userRepository) {
+	}
+
 	public Optional<UserDTO> getUserById(Integer id) {
 
 		Optional<UserDTO> userDTO = userRepository.findById(id);

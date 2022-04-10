@@ -3,8 +3,7 @@ import lombok.*;
 ;
 import org.springframework.hateoas.RepresentationModel; // para que sea navegable: extends RepresentationModel
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -13,8 +12,10 @@ import java.time.LocalDate;
 @EqualsAndHashCode (callSuper = true) //estamos llamando a los path
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity(name = "users")
 public class UserDTO extends RepresentationModel<UserDTO> {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @NonNull
     private int id;
     @NonNull
