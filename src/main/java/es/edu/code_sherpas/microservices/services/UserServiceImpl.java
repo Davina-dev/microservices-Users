@@ -1,76 +1,48 @@
-//trae desde la bbdd
 package es.edu.code_sherpas.microservices.services;
 
-import es.edu.code_sherpas.microservices.dao.entities.UserEntity;
-import es.edu.code_sherpas.microservices.dao.repositories.UserRepository;
-import es.edu.code_sherpas.microservices.mappers.UserMapper;
 import es.edu.code_sherpas.microservices.modelo.UserDTO;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import es.edu.code_sherpas.microservices.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
-	private  UserMapper userMapper;
+    @Autowired
+    private UserRepository userRepository;
 
-	private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+    }
 
-	public UserServiceImpl(UserRepository userRepository,UserMapper userMapper) {
 
-		this.userRepository = userRepository;
-		this.userMapper = userMapper;
+    @Override
+    public UserDTO saveUser(UserDTO userDTO) {
+        return userRepository.save(userDTO);
+    }
 
-	}
 
-	public Optional<UserDTO> getUserById(Integer id) {
+    @Override
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll();
+    }
 
-		Optional<UserEntity> userOptional = userRepository.findById(id);
+    @Override
+    public UserDTO getById(Integer id) {
+        return userRepository.findById(id).get();
+    }
 
-		if (userOptional.isPresent()) {
-			UserEntity userEntity = userOptional.get();
-			UserDTO userDTO = userMapper.getUserDTO(userEntity);
-			return Optional.of(userDTO);
-		}
+    @Override
+    public UserDTO save(UserDTO userDTO) {
+        return userRepository.save(userDTO);
+    }
 
-		return Optional.empty();
-
-	}
-
-	@Override
-	public List<UserDTO> listAllUsers(Pageable pageable) {
-
-		Page<UserEntity> usersEntitiesPage = userRepository.findAll(pageable);
-		List<UserEntity> userEntititesList = usersEntitiesPage.getContent();
-		List<UserDTO> usersDtos = userMapper.getUsersDtos(userEntititesList);
-
-		//Minima logica de negocios.
-		//Esta logica es la que se somete a testing en UserServiceImplTest
-		usersDtos.forEach(user -> user.setTitle("Developer " + user.getName()));
-
-		return usersDtos;
-	}
-
-	@Override
-	public UserDTO saveUser(UserDTO userDTO) {
-
-		UserEntity userEntity = userMapper.getUserEntity(userDTO);
-		userEntity = userRepository.save(userEntity);
-
-		return userDTO;
-	}
-
-	@Override
-	public void deleteById(Integer id) {
-
-		userRepository.deleteById(id);
-	}
-
+    @Override
+    public boolean delete (Integer id){
+        userRepository.deleteById(id);
+        return false;
+    }
 
 }
-
