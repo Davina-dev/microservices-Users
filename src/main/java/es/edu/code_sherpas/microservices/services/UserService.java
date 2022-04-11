@@ -1,19 +1,19 @@
 package es.edu.code_sherpas.microservices.services;
 
-import es.edu.code_sherpas.microservices.modelo.UserDTO;
+import es.edu.code_sherpas.microservices.modelo.Users;
 
 import java.util.List;
 
 
 public interface UserService{
 
-    public UserDTO saveUser(UserDTO userDTO);
+    public Users saveUser(Users users);
 
-    public List<UserDTO> getAllUsers();
+    public List<Users> getAllUsers();
 
-    public UserDTO getById(Integer id);
+    public Users getById(Integer id);
 
-    public UserDTO save (UserDTO userDTO);
+    public Users save (Users users);
 
     public boolean delete (Integer id);
 

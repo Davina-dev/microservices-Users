@@ -1,6 +1,4 @@
 package es.edu.code_sherpas.microservices.modelo;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -8,8 +6,8 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-@Entity
-public class UserDTO{
+@Entity(name = "users")
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,6 +66,6 @@ public class UserDTO{
         this.birthdate = birthdate;
     }
 
-    public UserDTO() {
+    public Users() {
     }
 }

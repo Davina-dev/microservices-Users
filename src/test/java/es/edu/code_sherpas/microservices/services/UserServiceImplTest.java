@@ -1,16 +1,14 @@
 package es.edu.code_sherpas.microservices.services;
 
-import es.edu.code_sherpas.microservices.modelo.UserDTO;
+import es.edu.code_sherpas.microservices.modelo.Users;
 import es.edu.code_sherpas.microservices.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,20 +28,20 @@ class UserServiceImplTest {
 
     @Test
     void TestUserServiceCanCreateAUser() {
-        UserDTO userDTO = new UserDTO();
+        Users users = new Users();
 
-        Mockito.when((UserDTO)this.userRepository.save(userDTO)).thenReturn(userDTO);
+        Mockito.when((Users)this.userRepository.save(users)).thenReturn(users);
 
         UserServiceImpl userService = new UserServiceImpl(this.userRepository);
-        UserDTO sut = userService.save(userDTO);
-        assertEquals(sut, userDTO);
+        Users sut = userService.save(users);
+        assertEquals(sut, users);
     }
 
     @Test
     void UserServiceCanDeleteAUser() {
-        UserDTO userDTO = new UserDTO();
+        Users users = new Users();
 
-        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userDTO));
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(users));
 
         var userService = new UserServiceImpl(userRepository);
         var sut= userService.delete(1);
@@ -53,7 +51,7 @@ class UserServiceImplTest {
 
     @Test
     void TestUserServiceCanGetUserById() {
-       UserDTO product = new UserDTO();
+       Users product = new Users();
         Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(product));
 
         var productService = new UserServiceImpl( userRepository);
@@ -72,20 +70,20 @@ class UserServiceImplTest {
 
     @Test
     void ProductServiceCantUpdateAProduct() {
-        UserDTO userDTO = new UserDTO();
+        Users users = new Users();
 
 
-        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userDTO));
-        Mockito.when(userRepository.save(userDTO)).thenReturn(userDTO);
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(users));
+        Mockito.when(userRepository.save(users)).thenReturn(users);
 
-        userDTO.setName("Davina");
-        userDTO.setId(1);
+        users.setName("Davina");
+        users.setId(1);
 
         var userService = new UserServiceImpl(userRepository);
 
-        var sut = userService.save(userDTO);
+        var sut = userService.save(users);
 
-        assertEquals(sut, userDTO);
+        assertEquals(sut, users);
     }
 
 

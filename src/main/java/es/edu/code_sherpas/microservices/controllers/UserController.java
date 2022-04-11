@@ -1,6 +1,6 @@
 package es.edu.code_sherpas.microservices.controllers;
 
-import es.edu.code_sherpas.microservices.modelo.UserDTO;
+import es.edu.code_sherpas.microservices.modelo.Users;
 import es.edu.code_sherpas.microservices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,37 +20,37 @@ public class UserController {
 
 
     @PostMapping
-    public String add(@Valid @RequestBody UserDTO userDTO){
-        userService.saveUser(userDTO);
+    public String add(@Valid @RequestBody Users users){
+        userService.saveUser(users);
         return "new user is added";
     }
 
     @GetMapping
-    public List<UserDTO> getAllUsers(){
+    public List<Users> getAllUsers(){
 
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> get(@PathVariable Integer id)
+    public ResponseEntity<Users> get(@PathVariable Integer id)
     {
         try {
-            UserDTO userDTO = userService.getById(id);
-            return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+            Users users = userService.getById(id);
+            return new ResponseEntity<Users>(users, HttpStatus.OK);
         }
         catch (NoSuchElementException e) {
-            return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update (@RequestBody UserDTO userDTO, @PathVariable Integer id){
+    public ResponseEntity<Users> update (@RequestBody Users users, @PathVariable Integer id){
         try{
-            UserDTO existingUsers=userService.getById(id);
-            userService.save(userDTO);
+            Users existingUsers=userService.getById(id);
+            userService.save(users);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (NoSuchElementException e){
-            return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
         }
     }
     @DeleteMapping("/{id}")
