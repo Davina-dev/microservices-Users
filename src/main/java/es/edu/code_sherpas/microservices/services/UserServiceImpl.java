@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
+         this.userRepository = userRepository;
     }
 
 
@@ -32,10 +33,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> getById(Integer id) {
+    public User getById(Integer id) {
         User user= new User();
-        return  Optional.ofNullable(user);
-       // return userRepository.findById(id).get();
+        //  Optional.ofNullable(user);
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean delete (Integer id){
         userRepository.deleteById(id);
-        return false;
+        return true;
     }
 
 }

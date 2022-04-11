@@ -12,7 +12,7 @@ public interface UserService{
 
     public List<User> getAllUsers();
 
-    public Optional<User> getById(Integer id);
+    public User getById(Integer id);
 
     public User save (User userDTO);
 

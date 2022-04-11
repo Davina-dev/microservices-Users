@@ -35,10 +35,10 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id)
     {
-        Optional<User> optUser = userService.getById(id);
+        System.out.println("User data id:"+ id);
         try {
-            Optional<User> user = userService.getById(id);
-            return new ResponseEntity<User>(HttpStatus.OK);
+            User users = userService.getById(id);
+            return new ResponseEntity<User>(users, HttpStatus.OK);
         }
         catch (NoSuchElementException e) {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
@@ -49,7 +49,7 @@ public class UserController {
     public ResponseEntity<User> update (@RequestBody User user, @PathVariable Integer id){
         System.out.println("updating data");
         try{
-            Optional existingUsers=userService.getById(id);
+            User existingUsers=userService.getById(id);
             userService.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (NoSuchElementException e){
