@@ -36,7 +36,7 @@ Abrir una terminal:
   - PRINCIPIO DE RESPONSABILIDAD ÚNICA 
       - Separación de responsabilidades por clases    
   - PRINCIPIO ABIERTO/CERRADO
-      - l
+      - Las clases estan abiertas para su expensión, pero cerradas para su modificación
   - PRINCIPIO DE SUSTITUCIÓN DE LISKOV
       - l
   - PRINCIPIO DE SEGREGACIÓN DE INTERFACES
