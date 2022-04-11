@@ -1,12 +1,13 @@
 package es.edu.code_sherpas.microservices.services;
 
-import es.edu.code_sherpas.microservices.modelo.UserDTO;
+import es.edu.code_sherpas.microservices.modelo.User;
 import es.edu.code_sherpas.microservices.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -19,24 +20,28 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
-        return userRepository.save(userDTO);
+    public User saveUser(User user) {
+
+        return userRepository.save(user);
     }
 
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public UserDTO getById(Integer id) {
-        return userRepository.findById(id).get();
+    public Optional<User> getById(Integer id) {
+        User user= new User();
+        return  Optional.ofNullable(user);
+       // return userRepository.findById(id).get();
     }
 
     @Override
-    public UserDTO save(UserDTO userDTO) {
-        return userRepository.save(userDTO);
+    public User save(User user)
+    {
+        return userRepository.save(user);
     }
 
     @Override
