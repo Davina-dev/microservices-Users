@@ -1,9 +1,14 @@
-<h1 align="center"> Api Rest + Java + SpringBoot + MySQL </h1>
+ 
 
-## 🔨 build application 
+![header](https://capsule-render.vercel.app/api?text=Api%Rest%!&fontColor=d6ace6 )
+#
+## 🔨 Build application 
 Abrir una terminal:
 
-- Ubicarse en la raiz del proyecto ( microservices/src/main/resource)
+- Ubicarse en la raiz del proyecto 
+  ```
+   microservices / src / main / resource 
+   ```
 - Ejecutar:
   ```
   docker-compose up
@@ -20,23 +25,26 @@ Abrir una terminal:
     - Actualizar todos los atributos (a la vez) 
     - Eliminar un cliente existente 
 
-### 🤔 Primeras Dudas:
+### 🤔 PRIMERAS DUDAS:
  - Tipo de arquitectura: microservicios vs monolito 
  - Cómo usar Docker y MySQL
 
 ### 🧹 CLEAN CODE
 
 ### 📖 SOLID 
-- PRINCIPIO DE RESPONSABILIDAD ÚNICA 
-    - la clase 
-- PRINCIPIO ABIERTO/CERRADO
-- PRINCIPIO DE SUSTITUCIÓN DE LISKOV
-- PRINCIPIO DE SEGREGACIÓN DE INTERFACES
-- PRINCIPIO DE INVERSIÓN DE DEPENDENCIAS
 
-### ⚠️ DIFICULTADES
+  - PRINCIPIO DE RESPONSABILIDAD ÚNICA 
+      - Separación de responsabilidades por clases    
+  - PRINCIPIO ABIERTO/CERRADO
+      - l
+  - PRINCIPIO DE SUSTITUCIÓN DE LISKOV
+      - l
+  - PRINCIPIO DE SEGREGACIÓN DE INTERFACES
+      - l
+  - PRINCIPIO DE INVERSIÓN DE DEPENDENCIAS
+    - l
 
-### 🤓 APRENDIZAJES
+### ⚠️ DIFICULTADES y 🤓 APRENDIZAJES
 
 
 
