@@ -35,7 +35,7 @@ Abrir una terminal:
   - Las clases son reducidas y predecibles.
   - código con pruebas unitarias
   - se evita repetir sin motivo (lombok)
-  - -se evitar Duplicación de código
+  - se evitar Duplicación de código
   
 #
 ### 📖 SOLID 
