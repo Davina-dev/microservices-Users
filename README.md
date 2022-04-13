@@ -26,7 +26,7 @@ Abrir una terminal:
     - Eliminar un cliente existente 
 #
 ### 🤔 PRIMERAS DUDAS:
- - Tipo de arquitectura: microservicios vs monolito 
+ - Tipo de arquitectura
  - Cómo usar Docker y MySQL
 #
 ### 🧹 CLEAN CODE
@@ -34,7 +34,6 @@ Abrir una terminal:
   - La relación entre diferentes partes del código es clara
   - Las clases son reducidas y predecibles.
   - código con pruebas unitarias
-  - se evita repetir sin motivo (lombok)
   - se evitar Duplicación de código
   
 #
