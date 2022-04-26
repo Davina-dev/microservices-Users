@@ -41,6 +41,7 @@ Abrir una terminal:
 ### 📖 SOLID 
 
   - 🕺 PRINCIPIO DE RESPONSABILIDAD ÚNICA 
+      - Uso Api Rest 
       - Separación de responsabilidades por clases  
       - las carpetas son específicas y acotadas 
   - 🤯 PRINCIPIO ABIERTO/CERRADO
