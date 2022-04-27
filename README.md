@@ -3,28 +3,25 @@
 ![header](https://capsule-render.vercel.app/api?text=Api%_%HTTP&fontColor=d6ace6 )
 #
 ## 🔨 Build application 
-Abrir una terminal:
-
-- Ubicarse en la raiz del proyecto 
+Open a terminal:
+- Go to the root of the project.
   ```
    microservices / src / main / resource 
    ```
-- Ejecutar:
+- Execute:
   ```
   docker-compose up
   ```
- - La aplicacion esta levantada y se puede probar con postman
-
+ - The application is up and can be tested with postman.
 #
-## 👩🏽‍💻 Objetivo del proyecto:
- Crear una API HTTP para gestionar los datos de los clientes de una pequeña tienda.
-  - Capacidades de la api: 
-    - Crear un nuevo cliente (atributos: nombre, apellido, correo electrónico y fecha de nacimiento)
-    - Obtener un solo cliente 
-    - Obtener todos los clientes 
-    - Actualizar todos los atributos (a la vez) 
-    - Eliminar un cliente existente 
-
+## 👩🏽‍💻 Project objective:
+ Create an HTTP API to manage customer data for a small store.
+  - Api capabilities: 
+    - Create a new customer (attributes: first name, last name, email and date of birth).
+    - Get a single customer 
+    - Get all customers 
+    - Update all attributes (at once) 
+    - Delete an existing customer 
 
   
   
